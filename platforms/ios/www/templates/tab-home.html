@@ -1,0 +1,11 @@
+<ion-view title="Home">
+  <ion-content class="has-header ">
+    <!-- Display current location's weather data-->
+    <h3>{{city}}</h3>
+    <h5><weather-icon icon="current.icon" id="current-icon"></weather-icon> {{current.currently.summary}}</h5>
+  	<p>The temperature now is</p>  
+  <span class="large">{{current.currently.temperature}} &deg; </span>
+
+
+  </ion-content>
+</ion-view>
