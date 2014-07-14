@@ -2,7 +2,6 @@
 
 var forecastioWeather = ['$q', '$resource', '$http', 'FORECASTIO_KEY', 
   function($q, $resource, $http, FORECASTIO_KEY) {
-    debugger;
   var url = 'https://api.forecast.io/forecast/' + FORECASTIO_KEY + '/';
 
   var weatherResource = $resource(url, {
@@ -22,28 +21,60 @@ var forecastioWeather = ['$q', '$resource', '$http', 'FORECASTIO_KEY',
 }];
 
 angular.module('starter.services', ['ngResource'])
-.factory('Cities', function() {
-var cities = [
-    { id: 0, name: 'Miami', lat:25.7877 , lgn: 80.2241 },
-    { id: 1, name: 'New York City' ,lat: 40.7127 , lgn: 74.0059 },
-    { id: 2, name: 'London' ,lat:51.5072 , lgn: 1.1275 },
-    { id: 3, name: 'Los Angeles' ,lat: 34.0500 , lgn: 118.2500 },
-    { id: 4, name: 'Dallas' ,lat: 32.7758 , lgn:96.7967  },
-    { id: 5, name: 'Frankfurt' ,lat:50.1117 , lgn: 8.6858 },
-    { id: 6, name: 'New Delhi' ,lat:28.6100 , lgn: 77.2300 }
-  ];
+// .factory('Cities', function() {
+//     var cities = [];
 
-  return {
-    all: function() {
-      return cities;
-    },
-    get: function(cityId) {
-      // Simple index lookup
-      return cities[cityId];
-    }
-  }
-}).
-factory('DataStore', function() {
+//     return {
+//       all: function() {
+//           debugger;
+
+//           var data = window.localStorage.getItem('cities');
+
+//           if (data != null )  {
+//             cities   = null;
+//             cities   = JSON.parse(data);
+//             console.log('using local storage');
+//           }
+//           else {
+            
+//             var cityObj = Parse.Object.extend("City");
+//             var query = new Parse.Query(cityObj);
+//             //query.descending("createdAt");
+//             //query.limit(20);  //fetch only 20 objects
+
+//             query.find({
+//                   success:function(results) { 
+//                         var index =0;
+//                         var Arrlen=results.length ;
+
+//                         for (index = 0; index < Arrlen; ++index) {
+//                             var obj = results[index];
+
+//                             cities.push({ 
+//                               id :  obj.id,
+//                               name: obj.attributes.ventimage,
+//                               lat:  obj.attributes.latitude,
+//                               lgn:  obj.attributes.longitude
+//                             });
+//                         }
+//                         return cities;
+//               },
+//               error:function(error) {
+//                   console.log("Error retrieving cities!");
+//                   }
+//               }); //end query.find
+
+//             //return cities;
+//           }  
+//       },
+//       get: function(cityId) {
+//         //given object id get object from localstorage
+//         var data = window.localStorage.getItem('cities');
+//         return data[cityId];
+//       }
+//     }
+// }).
+.factory('DataStore', function() {
     //create datastore with default values
     var DataStore = {
         city:       'Miami',

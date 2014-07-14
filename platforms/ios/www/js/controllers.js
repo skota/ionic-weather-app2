@@ -18,21 +18,64 @@ angular.module('starter.controllers', ['ionic'])
     });
 
 })
-.controller('LocationsCtrl', function($scope,$state, Cities,DataStore) {
-  $scope.cities = Cities.all();
+.controller('LocationsCtrl', function($scope,$rootScope, $state,DataStore) {
+ 	//get cities data from factory
+  	$scope.cities = [];
 
-  $scope.changeCity = function(cityId) {
-  	//get lat and longitude for seleted location
-	var lat  = $scope.cities[cityId].lat; //latitude
-	var lgn  = $scope.cities[cityId].lgn; //longitude
-	var city = $scope.cities[cityId].name; //city name
+  	var data = window.localStorage.getItem('cities');
 
-	DataStore.setCity(city);
-	DataStore.setLatitude(lat);
-	DataStore.setLongitude(lgn);
-	
-  	$state.go('tab.home');
-  }
+    if (data != null )  {
+        $scope.cities   = null;
+        $scope.cities   = JSON.parse(data);
+        console.log('using local storage');
+    }
+    else {
+        var cityObj = Parse.Object.extend("City");
+        var query = new Parse.Query(cityObj);
+        //query.descending("createdAt");
+        //query.limit(20);  //fetch only 20 objects
+
+        query.find({
+            success:function(results) { 
+                $scope.$apply(function() {
+                	var index =0;
+                 	var Arrlen=results.length ;
+
+                    for (index = 0; index < Arrlen; ++index) {
+                       	var obj = results[index];
+	                        $scope.cities.push({ 
+                              id :  obj.id,
+                              name: obj.attributes.name,
+                              lat:  obj.attributes.latitude,
+                              lgn:  obj.attributes.longitude
+                            });
+                    }
+                    //debugger;
+                    window.localStorage.setItem('cities', JSON.stringify($scope.cities));
+                });     
+            },
+            error:function(error) {
+                  console.log("Error retrieving cities!");
+            }
+        }); //end query.find
+    }
+
+
+  	$scope.changeCity = function(cityId) {
+  		
+	  	//get lat and longitude for seleted location
+	  	var data = JSON.parse(window.localStorage.getItem('cities'));
+	  	
+		var lat  = data[cityId].lat; //latitude
+		var lgn  = data[cityId].lgn; //longitude
+		var city = data[cityId].name; //city name
+
+		DataStore.setCity(city);
+		DataStore.setLatitude(lat);
+		DataStore.setLongitude(lgn);
+		
+	  	$state.go('tab.home');
+  	}
 })
 .controller('SettingsCtrl', function($scope) {
 	//manages app settings
