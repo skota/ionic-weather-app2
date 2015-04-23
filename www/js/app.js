@@ -12,7 +12,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
     }
 
     //intialize parse
-    Parse.Initialize("your-parse-applicationId","your-aprse-javascriptKey");
+    Parse.initialize("your-parse-applicationId","your-aprse-javascriptKey");
     
 
   });
