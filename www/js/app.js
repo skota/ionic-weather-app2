@@ -28,6 +28,7 @@ $stateProvider
     // Each tab has its own nav history stack:
     .state('tab.home', {
       url: '/home',
+      cache: false,
       views: {
         'tab-home': {
           templateUrl: 'templates/tab-home.html',
