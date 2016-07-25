@@ -12,7 +12,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
     }
 
     //intialize parse
-    Parse.Initialize("your-parse-applicationId","your-aprse-javascriptKey");
+    Parse.initialize("your-parse-applicationId","your-aprse-javascriptKey");
     
 
   });
@@ -28,6 +28,7 @@ $stateProvider
     // Each tab has its own nav history stack:
     .state('tab.home', {
       url: '/home',
+      cache: false,
       views: {
         'tab-home': {
           templateUrl: 'templates/tab-home.html',
